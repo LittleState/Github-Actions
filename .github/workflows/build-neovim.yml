@@ -45,10 +45,9 @@ jobs:
         pwd
         docker run -d --name extract --entrypoint sleep neovim-build 3600
         docker exec extract ls /neovim
-        docker cp extract:/neovim/*.deb ./nvim
+        docker cp extract:/neovim/build/*.deb ./nvim
         ls -alh
         ls -alh ./nvim
-        docker rm extract
 
     # 上传二进制产物
     - name: Upload Artifact
@@ -56,3 +55,9 @@ jobs:
       with:
         name: neovim-binary
         path: ./nvim
+
+    # 清理
+    - name: Clean up
+      if: always()
+      run: |
+        docker stop extract && docker rm -v extract
