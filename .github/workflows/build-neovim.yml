@@ -27,6 +27,8 @@ jobs:
     - name: Copy Neovim binary to host
       run: |
         docker create --name extract neovim-build
+        docker start extract
+        docker exec extract ls /neovim
         docker cp extract:/neovim/*.deb ./nvim
         ls -alh
         ls -alh ./nvim
