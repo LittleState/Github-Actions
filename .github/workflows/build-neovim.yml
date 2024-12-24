@@ -6,7 +6,8 @@ on:
 jobs:
   build:
     name: Build Neovim with Docker
-    runs-on: ubuntu-20.04
+    # runs-on: ubuntu-20.04
+    runs-on: self-hosted
     env:
       ACTIONS_STEP_DEBUG: true
 
@@ -30,8 +31,7 @@ jobs:
     - name: Copy Neovim binary to host
       run: |
         set -x
-        docker create --name extract neovim-build
-        docker start extract
+        docker run -d --name extract neovim-build
         docker exec extract ls /neovim
         docker cp extract:/neovim/*.deb ./nvim
         ls -alh
