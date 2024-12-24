@@ -15,7 +15,7 @@ jobs:
     # 构建镜像
     - name: Build Docker Image
       run: |
-        ls -alh
+        cd neovim
         docker build -t neovim-build .
 
     # 运行容器
@@ -28,6 +28,7 @@ jobs:
       run: |
         docker create --name extract neovim-build
         docker cp extract:/output ./nvim
+        ls -alh
         docker rm extract
 
     # 上传二进制产物
