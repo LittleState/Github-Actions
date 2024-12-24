@@ -32,11 +32,6 @@ jobs:
         cd neovim
         docker build -t neovim-build .
 
-    # 运行容器
-    - name: Run Docker Container
-      run: |
-        docker run neovim-build nvim --version
-
     # 拷贝产物至宿主机
     - name: Copy Neovim binary to host
       run: |
@@ -45,7 +40,7 @@ jobs:
         pwd
         docker run -d --name extract --entrypoint sleep neovim-build 3600
         docker exec extract ls /neovim/build
-        docker cp extract:/neovim/build/*.deb ./nvim
+        docker cp extract:/neovim/build/nvim-linux64.deb ./nvim
         ls -alh
         ls -alh ./nvim
 
