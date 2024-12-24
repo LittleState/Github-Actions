@@ -44,7 +44,7 @@ jobs:
         ls -alh .
         pwd
         docker run -d --name extract --entrypoint sleep neovim-build 3600
-        docker exec extract ls /neovim
+        docker exec extract ls /neovim/build
         docker cp extract:/neovim/build/*.deb ./nvim
         ls -alh
         ls -alh ./nvim
