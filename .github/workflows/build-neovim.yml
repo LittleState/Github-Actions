@@ -26,6 +26,7 @@ jobs:
 
     # 拷贝产物至宿主机
     - name: Copy Neovim binary to host
+      shell: bash {0}
       run: |
         docker create --name extract neovim-build
         docker start extract
