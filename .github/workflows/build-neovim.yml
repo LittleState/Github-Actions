@@ -7,6 +7,8 @@ jobs:
   build:
     name: Build Neovim with Docker
     runs-on: ubuntu-20.04
+    env:
+      ACTIONS_STEP_DEBUG: true
 
     # 获取仓库
     steps:
@@ -26,7 +28,6 @@ jobs:
 
     # 拷贝产物至宿主机
     - name: Copy Neovim binary to host
-      shell: bash {0}
       run: |
         docker create --name extract neovim-build
         docker start extract
