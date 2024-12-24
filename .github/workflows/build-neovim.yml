@@ -1,0 +1,38 @@
+name: Build Neovim with Docker
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    # 获取仓库
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # 构建镜像
+    - name: Build Docker Image
+      run: |
+        ls -alh
+        docker build -t neovim-build .
+
+    # 运行容器
+    - name: Run Docker Container
+      run: |
+        docker run neovim-build nvim --version
+
+    # 拷贝产物至宿主机
+    - name: Copy Neovim binary to host
+      run: |
+        docker create --name extract neovim-build
+        docker cp extract:/output ./nvim
+        docker rm extract
+
+    # 上传二进制产物
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: neovim-binary
+        path: ./nvim
