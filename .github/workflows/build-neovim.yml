@@ -1,10 +1,11 @@
-name: Build Neovim with Docker
+name: Build Neovim
 
 on:
   workflow_dispatch:
 
 jobs:
   build:
+    name: Build Neovim with Docker
     runs-on: ubuntu-20.04
 
     # 获取仓库
