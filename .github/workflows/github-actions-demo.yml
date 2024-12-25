@@ -4,9 +4,9 @@ on: workflow_dispatch
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
+    env: 
+      ACTIONS_STEP_DEBUG: true
     steps:
-      - env: 
-          ACTIONS_STEP_DEBUG: true
       - name: Check CPU and Memory Info
         run: |
           echo "CPU Info:"
