@@ -8,10 +8,11 @@ jobs:
     name: Build Neovim with Docker
     # runs-on: ubuntu-20.04
     runs-on: self-hosted
-    env: 
-      ACTIONS_STEP_DEBUG: true
 
     steps:
+    - env: 
+        ACTIONS_STEP_DEBUG: true
+
     - name: Check CPU and Memory Info
       run: |
         echo "CPU Info:"
