@@ -12,6 +12,8 @@ jobs:
         run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
       - name: Check CPU and Memory Info
         run: |
+          echo "OS Info:"
+          cat /etc/os-release
           echo "System Info:"
           uname -a
           echo "CPU Info:"
@@ -49,6 +51,8 @@ jobs:
         run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
       - name: Check CPU and Memory Info
         run: |
+          echo "OS Info:"
+          cat /etc/os-release
           echo "System Info:"
           uname -a
           echo "CPU Info:"
