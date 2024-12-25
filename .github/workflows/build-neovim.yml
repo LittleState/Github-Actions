@@ -8,10 +8,9 @@ jobs:
     name: Build Neovim with Docker
     # runs-on: ubuntu-20.04
     runs-on: self-hosted
-    env:
+    env: 
       ACTIONS_STEP_DEBUG: true
 
-    
     steps:
     - name: Check CPU and Memory Info
       run: |
@@ -23,13 +22,13 @@ jobs:
         df -h
 
     # 获取仓库
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
     # 构建镜像
     - name: Build Docker Image
+      shell: bash
+      working-directory: ./neovim
       run: |
-        cd neovim
         docker build -t neovim-build .
 
     # 拷贝产物至宿主机
