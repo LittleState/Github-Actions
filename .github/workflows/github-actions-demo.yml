@@ -8,13 +8,15 @@ jobs:
       ACTIONS_STEP_DEBUG: true
     container:
       image: alpine
-      options: --cpus 1 --memory 1g
+      options: --cpus 1
     steps:
       - run: |
           apk update
           apk add util-linux
       - name: Check CPU and Memory Info
         run: |
+          echo "System Info:"
+          uname -a
           echo "CPU Info:"
           lscpu
           echo "Memory Info:"
