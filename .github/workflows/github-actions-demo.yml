@@ -15,6 +15,7 @@ jobs:
       #     apk add util-linux
       - name: Check CPU and Memory Info
         run: |
+          (uname -a)
           echo "System Info:"
           uname -a
           echo "CPU Info:"
