@@ -11,7 +11,7 @@ jobs:
       options: --cpus 1 --memory 1g
     steps:
       - run: >
-          apk update
+          apk update &&\
           apk add util-linux
       - name: Check CPU and Memory Info
         run: |
