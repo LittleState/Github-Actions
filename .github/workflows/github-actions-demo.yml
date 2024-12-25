@@ -94,6 +94,7 @@ jobs:
     needs: container-test-job
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Check for dockerenv file
         run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
       - name: Check CPU and Memory Info
