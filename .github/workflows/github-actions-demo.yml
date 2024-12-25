@@ -7,12 +7,12 @@ jobs:
     env: 
       ACTIONS_STEP_DEBUG: true
     container:
-      image: alpine
+      image: node:18
       options: --cpus 1
     steps:
-      - run: |
-          apk update
-          apk add util-linux
+      # - run: |
+      #     apk update
+      #     apk add util-linux
       - name: Check CPU and Memory Info
         run: |
           echo "System Info:"
