@@ -6,16 +6,10 @@ jobs:
     runs-on: ubuntu-latest
     env: 
       ACTIONS_STEP_DEBUG: true
-    container:
-      image: centos:latest
-      options: --cpus 1
+
     steps:
-      # - run: |
-      #     apk update
-      #     apk add util-linux
       - name: Check CPU and Memory Info
         run: |
-          (uname -a)
           echo "System Info:"
           uname -a
           echo "CPU Info:"
@@ -35,3 +29,18 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+
+  container-test-job:
+    runs-on: ubuntu-latest
+    container:
+      image: node:18
+      env:
+        NODE_ENV: development
+      ports:
+        - 80
+      volumes:
+        - my_docker_volume:/volume_mount
+      options: --cpus 1
+    steps:
+      - name: Check for dockerenv file
+        run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
