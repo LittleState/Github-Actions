@@ -6,6 +6,9 @@ jobs:
     runs-on: ubuntu-latest
     env: 
       ACTIONS_STEP_DEBUG: true
+    container:
+      image: alpine
+      options: --cpus 1 --memory 1g
     steps:
       - name: Check CPU and Memory Info
         run: |
