@@ -8,6 +8,8 @@ jobs:
       ACTIONS_STEP_DEBUG: true
 
     steps:
+      - name: Check for dockerenv file
+        run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
       - name: Check CPU and Memory Info
         run: |
           echo "System Info:"
