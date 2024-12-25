@@ -31,9 +31,10 @@ jobs:
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
   container-test-job:
+    needs: Explore-GitHub-Actions
     runs-on: ubuntu-latest
     container:
-      image: node:18
+      image: centos:latest
       env:
         NODE_ENV: development
       ports:
@@ -44,3 +45,13 @@ jobs:
     steps:
       - name: Check for dockerenv file
         run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
+      - name: Check CPU and Memory Info
+        run: |
+          echo "System Info:"
+          uname -a
+          echo "CPU Info:"
+          lscpu
+          echo "Memory Info:"
+          free -h
+          echo "Disk Info:"
+          df -h
