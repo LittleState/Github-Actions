@@ -61,3 +61,57 @@ jobs:
           free -h
           echo "Disk Info:"
           df -h
+
+  my_oracle_arm1:
+    needs: container-test-job
+    runs-on: self-hosted
+    container:
+      image: ubuntu-latest
+      options: --cpus 1 --memory 1
+    steps:
+      - name: Check for dockerenv file
+        run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
+      - name: Check CPU and Memory Info
+        run: |
+          echo "【OS Info】"
+          cat /etc/os-release
+          echo "【System Info】"
+          uname -a
+          echo "【CPU Info】"
+          lscpu
+          echo "【Memory Info】"
+          free -h
+          echo "【Disk Info】"
+          df -h
+      - name: File System Check
+        run: |
+          set -x
+          ls -alh .
+          ls -alh /
+
+  my_oracle_arm2:
+    needs: container-test-job
+    runs-on: self-hosted
+    container:
+      image: centos:latest
+      options: --cpus 1 --memory 1
+    steps:
+      - name: Check for dockerenv file
+        run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
+      - name: Check CPU and Memory Info
+        run: |
+          echo "【OS Info】"
+          cat /etc/os-release
+          echo "【System Info】"
+          uname -a
+          echo "【CPU Info】"
+          lscpu
+          echo "【Memory Info】"
+          free -h
+          echo "【Disk Info】"
+          df -h
+      - name: File System Check
+        run: |
+          set -x
+          ls -alh .
+          ls -alh /
