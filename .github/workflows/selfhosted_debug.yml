@@ -16,6 +16,7 @@ jobs:
           ls -alh .
           # echo "check workflows:"
           # ls -alh ./.github/workflows/
+          exit 1
       - run: |
           echo "os-release:"
           cat /etc/os-release
