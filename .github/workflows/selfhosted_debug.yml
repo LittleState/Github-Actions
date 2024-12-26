@@ -45,8 +45,9 @@ jobs:
     steps:
       - name: Install Docker CLI
         run: |
-          dnf --disablerepo '*' --enablerepo extras swap centos-linux-repos centos-stream-repos
-          dnf distro-sync
+          sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+          sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+          dnf -y update
           dnf -y install dnf-plugins-core
           dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
           dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
