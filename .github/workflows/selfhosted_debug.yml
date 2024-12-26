@@ -13,8 +13,8 @@ jobs:
           pwd
           echo "ls:"
           ls -alh .
-          echo "check workflows:"
-          ls -alh ./.github/workflows/
+          # echo "check workflows:"
+          # ls -alh ./.github/workflows/
       - run: |
           echo "os-release:"
           cat /etc/os-release
@@ -36,8 +36,8 @@ jobs:
           pwd
           echo "ls:"
           ls -alh .
-          echo "check workflows:"
-          ls -alh ./.github/workflows/
+          # echo "check workflows:"
+          # ls -alh ./.github/workflows/
       - run: |
           echo "os-release:"
           cat /etc/os-release
