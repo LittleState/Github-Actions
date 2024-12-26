@@ -1,0 +1,13 @@
+name: Oracle Arm Debug
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ARM64
+    steps:
+      - run: |
+          echo "pwd:"
+          pwd
+          echo "ls:"
+          ls -alh .
+  
