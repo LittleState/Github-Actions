@@ -2,33 +2,11 @@ name: Oracle Arm Debug
 on: workflow_dispatch
 
 jobs:
-  build:
-    runs-on: ARM64
-    container: centos
-    steps:
-      - run: |
-          echo "user:"
-          id
-          echo "pwd:"
-          pwd
-          echo "ls:"
-          ls -alh .
-          # echo "check workflows:"
-          # ls -alh ./.github/workflows/
-      - run: |
-          echo "os-release:"
-          cat /etc/os-release
-          echo "cpu-info:"
-          lscpu
-          echo "mem-info:"
-          free -h
-          echo "disk-info:"
-          df -h
-
   build2:
-    needs: build
+    # needs: build
     runs-on: ARM64
     steps:
+      - uses: actions/checkout@v4
       - run: |
           echo "user:"
           id
@@ -53,3 +31,29 @@ jobs:
           rm -rf ./* || true
           rm -rf ./.??* || true
           ls -la ./
+
+  build:
+    needs: build2
+    runs-on: ARM64
+    container: centos
+    steps:
+      - run: |
+          echo "user:"
+          id
+          echo "pwd:"
+          pwd
+          echo "ls:"
+          ls -alh .
+          # echo "check workflows:"
+          # ls -alh ./.github/workflows/
+      - run: |
+          echo "os-release:"
+          cat /etc/os-release
+          echo "cpu-info:"
+          lscpu
+          echo "mem-info:"
+          free -h
+          echo "disk-info:"
+          df -h
+
+  
