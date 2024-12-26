@@ -55,5 +55,6 @@ jobs:
           free -h
           echo "disk-info:"
           df -h
+          sleep 20
 
   
