@@ -4,10 +4,19 @@ on: workflow_dispatch
 jobs:
   build:
     runs-on: ARM64
+    container: centos
     steps:
       - run: |
           echo "pwd:"
           pwd
           echo "ls:"
           ls -alh .
-  
+      - run: |
+          echo "os-release:"
+          cat /etc/os-release
+          echo "cpu-info:"
+          lscpu
+          echo "mem-info:"
+          free -h
+          echo "disk-info:"
+          df -h
