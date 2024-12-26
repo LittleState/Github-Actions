@@ -39,7 +39,9 @@ jobs:
   build:
     needs: build2
     runs-on: ARM64
-    container: centos
+    container: 
+      image: centos
+      options: --privileged -v /var/run/docker.sock:/var/run/docker.sock
     steps:
       - run: |
           echo "user:"
