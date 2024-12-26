@@ -50,5 +50,6 @@ jobs:
       - if: always()
         run: |
           ls ./
-          rm -rf ./
+          rm -rf ./*
+          rm -rf ./.*
           ls ./
