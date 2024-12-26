@@ -45,7 +45,8 @@ jobs:
     steps:
       - name: Install Docker CLI
         run: |
-          dnf update -y
+          dnf --disablerepo '*' --enablerepo extras swap centos-linux-repos centos-stream-repos
+          dnf distro-sync
           dnf -y install dnf-plugins-core
           dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
           dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
