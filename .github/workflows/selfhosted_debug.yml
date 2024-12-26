@@ -47,7 +47,7 @@ jobs:
           free -h
           echo "disk-info:"
           df -h
-      - if: alwayls()
+      - if: always()
         run: |
           ls ./
           rm -rf ./
