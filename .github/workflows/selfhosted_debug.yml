@@ -26,6 +26,9 @@ jobs:
           free -h
           echo "disk-info:"
           df -h
+      - name: Test Docker
+        run: |
+          docker ps
       # - if: always()
       #   run: |
       #     ls -la ./
@@ -57,5 +60,8 @@ jobs:
           echo "disk-info:"
           df -h
           sleep 20
+      - name: Test Docker
+        run: |
+          docker ps
 
   
