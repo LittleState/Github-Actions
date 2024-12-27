@@ -28,8 +28,13 @@ jobs:
           mkdir -p dist
           python -m nuitka --standalone --onefile --output-dir=dist ./python-scripts/example.py
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: executable
-          path: dist/
+      - name: Run Python Scripts
+        run: |
+          ls -alh ./dist/
+          ./dist/executable xiaobang 1 2
+
+      # - name: Upload artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: executable
+      #     path: dist/
