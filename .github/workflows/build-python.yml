@@ -2,15 +2,17 @@ name: Build Python Executable
 
 on: workflow_dispatch
 
+env:
+  UID: 1002
+  GID: 1002
+
 jobs:
   build:
     runs-on: self-hosted
     container: 
       image: ubuntu:latest
-      options: --user ${{ UID }}:${{ GID }}
-      env:
-        UID: 1002
-        GID: 1002
+      options: --user ${{ env.UID }}:${{ env.GID }}
+
     steps:
       - run: |
           id
