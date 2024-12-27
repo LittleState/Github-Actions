@@ -7,7 +7,7 @@ jobs:
     runs-on: self-hosted
     container: 
       image: ubuntu:latest
-      options: --user ${{ env.UID }}:${{ env.GID }}
+      options: --user ${{ UID }}:${{ GID }}
       env:
         UID: 1002
         GID: 1002
