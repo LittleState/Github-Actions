@@ -9,29 +9,32 @@ jobs:
       image: ubuntu:latest
       options: --user $(id -u)
     steps:
+      - run: |
+          id
+          whoami
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.13' 
-          architecture: 'arm64'
+      # - uses: actions/setup-python@v5
+      #   with:
+      #     python-version: '3.13' 
+      #     architecture: 'arm64'
 
-      - name: Install dependencies
-        run: |
-          pip install --upgrade pip
-          pip install nuitka
-          apt-get -y update
-          apt-get -y install gcc
-          apt-get -y install patchelf
+      # - name: Install dependencies
+      #   run: |
+      #     pip install --upgrade pip
+      #     pip install nuitka
+      #     apt-get -y update
+      #     apt-get -y install gcc
+      #     apt-get -y install patchelf
 
-      - name: Compile with Nuitka
-        run: |
-          mkdir -p dist
-          python -m nuitka --standalone --onefile --output-dir=dist ./python-scripts/example.py
+      # - name: Compile with Nuitka
+      #   run: |
+      #     mkdir -p dist
+      #     python -m nuitka --standalone --onefile --output-dir=dist ./python-scripts/example.py
 
-      - name: Run Python Scripts
-        run: |
-          ls -alh ./dist/
-          ./dist/example.bin xiaobang 1 2
+      # - name: Run Python Scripts
+      #   run: |
+      #     ls -alh ./dist/
+      #     ./dist/example.bin xiaobang 1 2
 
       # - name: Upload artifact
       #   uses: actions/upload-artifact@v4
