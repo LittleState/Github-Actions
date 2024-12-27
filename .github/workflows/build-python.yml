@@ -31,7 +31,7 @@ jobs:
       - name: Run Python Scripts
         run: |
           ls -alh ./dist/
-          ./dist/executable xiaobang 1 2
+          ./dist/example.bin xiaobang 1 2
 
       # - name: Upload artifact
       #   uses: actions/upload-artifact@v4
