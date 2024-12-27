@@ -7,7 +7,10 @@ jobs:
     runs-on: self-hosted
     container: 
       image: ubuntu:latest
-      options: --user $(id -u)
+      options: --user ${UID}:${GID}
+      env:
+        UID: $(id -u)
+        GID: $(id -g)
     steps:
       - run: |
           id
