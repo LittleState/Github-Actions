@@ -9,8 +9,8 @@ jobs:
       image: ubuntu:latest
       options: --user ${{ env.UID }}:${{ env.GID }}
       env:
-        UID: $(id -u)
-        GID: $(id -g)
+        UID: 1002
+        GID: 1002
     steps:
       - run: |
           id
