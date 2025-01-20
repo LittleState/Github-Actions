@@ -51,7 +51,7 @@ jobs:
         run: |
           cd neovim/build
           dpkg -i nvim-linux64.deb
-          neovim --version
+          nvim --version
 
       # - name: 上传二进制产物
       #   uses: actions/upload-artifact@v4
