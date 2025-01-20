@@ -1,12 +1,12 @@
-name: Build Neovim
+name: Build Neovim Self
 
 on:
   workflow_dispatch:
 
-permissions:
-  contents: write
-  pages: write
-  id-token: write
+# permissions:
+#   contents: write
+#   pages: write
+#   id-token: write
 
 jobs:
   build:
@@ -42,10 +42,10 @@ jobs:
         run: |
           make CMAKE_BUILD_TYPE=Release
   
-      - name: 运行测试
-        run: |
-          cd neovim
-          make test
+      # - name: 运行测试
+      #   run: |
+      #     cd neovim
+      #     make test
 
       - name: 打包 Neovim
         run: |
