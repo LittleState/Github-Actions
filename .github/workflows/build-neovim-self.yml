@@ -28,7 +28,7 @@ jobs:
       - name: 安装依赖
         run: |
           apt update
-          apt install -y ninja-build gettext cmake unzip curl build-essential
+          apt install -y ninja-build gettext cmake unzip curl build-essential fakeroot dh-make
 
       - name: 获取仓库
         run: |
