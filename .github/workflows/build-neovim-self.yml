@@ -1,0 +1,59 @@
+name: Build Neovim
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    name: Build Neovim with Docker
+    runs-on: self-hosted
+    container:
+      image: bitnami/git:latest
+
+    steps:
+      - name: Check CPU and Memory Info
+        run: |
+          echo "CPU Info:"
+          lscpu
+          echo "Memory Info:"
+          free -h
+          echo "Disk Info:"
+          df -h
+  
+      - name: 获取仓库
+        run: |
+          git clone --depth=1 https://github.com/neovim/neovim.git
+          cd neovim
+          git submodule update --init --recursive
+  
+      - name: 安装依赖
+        run: |
+          apt update
+          apt install -y ninja-build gettext cmake unzip curl build-essential
+
+      - name: 编译 Neovim
+        shell: bash
+        working-directory: ./neovim
+        run: |
+          make CMAKE_BUILD_TYPE=Release
+  
+      - name: 运行测试
+        run: |
+          cd neovim
+          make test
+
+      - name: 打包 Neovim
+        run: |
+          cd neovim
+          cpack -G DEB
+
+      - name: 上传二进制产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: neovim-binary
+          path: neovim/build/*.deb
