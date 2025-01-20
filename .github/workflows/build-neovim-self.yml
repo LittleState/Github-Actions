@@ -54,7 +54,7 @@ jobs:
 
       - name: 打包 Neovim
         run: |
-          cd neovim
+          cd neovim/build
           cpack -G DEB
 
       - name: 上传二进制产物
