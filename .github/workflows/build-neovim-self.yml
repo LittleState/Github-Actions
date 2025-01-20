@@ -25,16 +25,16 @@ jobs:
           echo "Disk Info:"
           df -h
   
-      - name: 获取仓库
-        run: |
-          git clone --depth=1 https://github.com/neovim/neovim.git
-          cd neovim
-          git submodule update --init --recursive
-  
       - name: 安装依赖
         run: |
           apt update
           apt install -y ninja-build gettext cmake unzip curl build-essential
+
+      - name: 获取仓库
+        run: |
+          git clone --depth=1 https://github.com/neovim/neovim.git
+          cd neovim
+          git checkout stable
 
       - name: 配置 CMake 构建
         run: |
@@ -45,12 +45,7 @@ jobs:
         shell: bash
         working-directory: ./neovim/build
         run: |
-          ninja
-  
-      # - name: 运行测试
-      #   run: |
-      #     cd neovim
-      #     make test
+          make CMAKE_BUILD_TYPE=Release
 
       - name: 打包 Neovim
         run: |
