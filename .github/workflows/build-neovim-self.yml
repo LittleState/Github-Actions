@@ -32,20 +32,15 @@ jobs:
 
       - name: 获取仓库
         run: |
-          git clone --depth=1 https://github.com/neovim/neovim.git
+          git clone https://github.com/neovim/neovim.git
           cd neovim
           git checkout stable
-
-      - name: 配置 CMake 构建
-        run: |
-          cd neovim
-          cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
 
       - name: 编译 Neovim
         shell: bash
         working-directory: ./neovim/build
         run: |
-          make CMAKE_BUILD_TYPE=Release
+          make CMAKE_BUILD_TYPE=RelWithDebInfo
 
       - name: 打包 Neovim
         run: |
