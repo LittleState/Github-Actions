@@ -1,6 +1,8 @@
 name: Build Neovim Self
 
 on:
+  schedule:
+    - cron: "05 7 * * *"
   workflow_dispatch:
 
 # permissions:
