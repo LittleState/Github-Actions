@@ -38,7 +38,7 @@ jobs:
 
       - name: 编译 Neovim
         shell: bash
-        working-directory: ./neovim/build
+        working-directory: ./neovim
         run: |
           make CMAKE_BUILD_TYPE=RelWithDebInfo
 
