@@ -36,11 +36,16 @@ jobs:
           apt update
           apt install -y ninja-build gettext cmake unzip curl build-essential
 
+      - name: 配置 CMake 构建
+        run: |
+          cd neovim
+          cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+
       - name: 编译 Neovim
         shell: bash
-        working-directory: ./neovim
+        working-directory: ./neovim/build
         run: |
-          make CMAKE_BUILD_TYPE=Release
+          ninja
   
       # - name: 运行测试
       #   run: |
