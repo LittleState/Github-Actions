@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 NODE_EXPORTER_URL="http://localhost:9100/metrics"
 JOB_NAME="node_exporter"
