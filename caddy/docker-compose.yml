@@ -1,0 +1,14 @@
+services:
+  caddy:
+    image: x1aobang/caddy:latest
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+      - "8443:443"
+      - "8443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./site:/srv
+      - ./data:/data
+      - ./config:/config
