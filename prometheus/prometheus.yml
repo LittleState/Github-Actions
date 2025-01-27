@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 15s  # 每 15 秒拉取一次数据
+
+scrape_configs:
+  - job_name: 'pushgateway'
+    honor_labels: true  # 保留 Pushgateway 的标签
+    static_configs:
+      - targets: ['pushgateway:9091']  # Pushgateway 的地址
+  - job_name: 'node_exporter'
+    static_configs:
+      - targets: ['node_exporter:9100']
+        labels:
+          instance: 'oracle-arm-4c24g'
+
+rule_files:
+  - 'alert.rules.yml'
