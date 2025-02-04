@@ -26,8 +26,10 @@ jobs:
 
       - name: Generate and build
         run: |
+          git clone --depth=1 https://github.com/ollama/ollama.git
+          cd ollama
           go generate ./...
-          go build -v -o ollama.exe .
+          env GOOS=windows GOARCH=amd64 CGO_ENABLED=1 CC=x86_64-w64-mingw32-gcc go build -o ollama.exe .
 
       - name: Archive build artifacts
         uses: actions/upload-artifact@v4
