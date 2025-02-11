@@ -14,5 +14,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build Docker Image
-        run: |
-          docker build -t vscode-online:latest .
+        uses: docker/build-push-action@v6
+        with:
+          push: false
+          tags: vscode-online:latest
