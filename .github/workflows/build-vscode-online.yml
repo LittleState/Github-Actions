@@ -1,0 +1,18 @@
+name: Build Vscode Online
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Vscode Online
+    runs-on: self-hosted
+    container:
+      image: ubuntu:22.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: |
+          docker build -t vscode-online:latest .
