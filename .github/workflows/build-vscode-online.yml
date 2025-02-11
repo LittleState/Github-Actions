@@ -19,5 +19,6 @@ jobs:
       - name: Build Docker Image
         uses: docker/build-push-action@v6
         with:
+          context: ./vscode-online
           push: false
           tags: vscode-online:latest
