@@ -34,3 +34,8 @@ jobs:
         working-directory: ./vscode-online
         run: |
           docker build -t vscode-online:latest .
+          docker save vscode-online:latest | gzip > vscode-online_latest.tar.gz
+
+      - uses: actions/upload-artifact@v4.6.0
+        with:
+          path: ./vscode-online/vscode-online_latest.tar.gz
