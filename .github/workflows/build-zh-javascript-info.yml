@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
       - run: |
           docker build -t x1aobang/jsinfo:latest .
 
