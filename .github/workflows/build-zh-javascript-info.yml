@@ -15,7 +15,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - run: |
+      - working-directory: ./zh.javascript.info
+        run: |
           docker build -t x1aobang/jsinfo:latest .
 
       # - name: 上传二进制产物
