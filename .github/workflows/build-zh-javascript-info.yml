@@ -1,0 +1,24 @@
+name: Build zh.javascript.info
+
+on:
+  workflow_dispatch:
+
+# permissions:
+#   contents: write
+#   pages: write
+#   id-token: write
+
+jobs:
+  build:
+    name: Build Image
+    runs-on: self-hosted
+
+    steps:
+      - run: |
+          docker build -t x1aobang/jsinfo:latest .
+
+      # - name: 上传二进制产物
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: neovim-binary
+      #     path: neovim/build/*.deb
