@@ -52,7 +52,7 @@ jobs:
       - name: 安装并验证
         run: |
           cd neovim/build
-          dpkg -i nvim-linux64.deb
+          dpkg -i nvim-linux-arm64.deb
           nvim --version
 
       # - name: 上传二进制产物
