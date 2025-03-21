@@ -15,6 +15,7 @@ jobs:
           scoop install neovim
           scoop list
           echo $env:Path
+          nvim --version
       - name: Install AstroNvim
         shell: pwsh
         run: |
