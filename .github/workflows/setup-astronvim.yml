@@ -13,9 +13,13 @@ jobs:
           Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
           Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
           scoop install neovim
+          scoop list
+          echo $env:Path
       - name: Install AstroNvim
         shell: pwsh
         run: |
+          refreshenv
+          nvim --version
           git clone --depth 1 https://github.com/AstroNvim/template $env:LOCALAPPDATA\nvim
           nvim --headless -c "quitall"
       - name: Archive Bundle
