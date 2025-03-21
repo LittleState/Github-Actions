@@ -14,14 +14,14 @@ jobs:
           Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
           scoop install neovim
           git clone --depth 1 https://github.com/AstroNvim/template $env:LOCALAPPDATA\nvim
-          nvim --version
-      - name: Install AstroNvim
-        shell: pwsh
-        run: |
-          refreshenv
-          nvim --version
-          git clone --depth 1 https://github.com/AstroNvim/template $env:LOCALAPPDATA\nvim
           nvim --headless -c "quitall"
+      # - name: Install AstroNvim
+      #   shell: pwsh
+      #   run: |
+      #     refreshenv
+      #     nvim --version
+      #     git clone --depth 1 https://github.com/AstroNvim/template $env:LOCALAPPDATA\nvim
+      #     nvim --headless -c "quitall"
       - name: Archive Bundle
         shell: pwsh
         run: |
