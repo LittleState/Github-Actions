@@ -14,7 +14,7 @@ jobs:
           Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
           scoop install neovim
           git clone --depth 1 https://github.com/AstroNvim/template $env:LOCALAPPDATA\nvim
-          nvim --headless -c "quitall"
+          nvim --headless -q
       # - name: Install AstroNvim
       #   shell: pwsh
       #   run: |
