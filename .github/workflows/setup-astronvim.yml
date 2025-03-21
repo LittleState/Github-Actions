@@ -1,0 +1,26 @@
+name: Build AstroNvim Offline (Windows)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Install Neovim
+        shell: pwsh
+        run: |
+          Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+          Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+      - name: Install AstroNvim
+        shell: pwsh
+        run: |
+          git clone --depth 1 https://github.com/AstroNvim/template $env:LOCALAPPDATA\nvim
+          nvim --headless -c "quitall"
+      - name: Archive Bundle
+        shell: pwsh
+        run: |
+          Compress-Archive -Path `
+            "$env:LOCALAPPDATA\nvim", `
+            "$env:LOCALAPPDATA\nvim-data", `
+            -DestinationPath astronvim-bundle.zip
