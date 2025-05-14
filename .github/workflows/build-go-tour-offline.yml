@@ -5,38 +5,45 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    container:
-      image: ubuntu:20.04
+    runs-on: windows-latest
 
     steps:
     - name: Set up Go
-      uses: actions/setup-go@v3
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
 
     - name: Install Tour
       run: go install golang.org/x/website/tour@latest
 
-    - name: Collect Files
-      run: |
-        # 获取二进制路径
-        TOUR_BIN="$(go env GOPATH)/bin/tour"
+    # - name: Collect Files
+    #   run: |
+    #     # 获取二进制路径
+    #     TOUR_BIN="$(go env GOPATH)/bin/tour"
         
-        # 创建打包目录
-        mkdir -p dist/bin
+    #     # 创建打包目录
+    #     mkdir -p dist/bin
         
-        # 复制二进制文件
-        cp "$TOUR_BIN" dist/bin/
+    #     # 复制二进制文件
+    #     cp "$TOUR_BIN" dist/bin/
 
-    - name: Package Artifacts
-      run: |
-        cd dist
-        tar czvf ../go-tour-${{ runner.os }}.tar.gz *
+    # - name: Package Artifacts
+    #   run: |
+    #     cd dist
+    #     tar czvf ../go-tour-${{ runner.os }}.tar.gz *
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v4
+    # - name: Upload Artifact
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: go-tour-${{ runner.os }}
+    #     path: |
+    #       go-tour-${{ runner.os }}.tar.gz
+    #       go-tour-${{ runner.os }}.zip
+
+    - name: Archive tour.exe
+      uses: actions/upload-artifact@v3
       with:
-        name: go-tour-${{ runner.os }}
+        name: tour-binary
         path: |
-          go-tour-${{ runner.os }}.tar.gz
-          go-tour-${{ runner.os }}.zip
+          %GOPATH%/bin/tour.exe
       
