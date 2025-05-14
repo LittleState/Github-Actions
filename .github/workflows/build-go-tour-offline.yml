@@ -5,10 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ubuntu-22.04
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -25,22 +22,12 @@ jobs:
       run: |
         # 获取二进制路径
         TOUR_BIN="$(go env GOPATH)/bin/tour"
-        if [[ "${{ runner.os }}" == "Windows" ]]; then
-          TOUR_BIN="${TOUR_BIN}.exe"
-        fi
         
         # 创建打包目录
-        mkdir -p dist/{bin,static}
+        mkdir -p dist/bin
         
         # 复制二进制文件
         cp "$TOUR_BIN" dist/bin/
-        
-        # # 查找静态资源路径
-        # GO_MOD_PATH="$(go env GOPATH)/pkg/mod/golang.org/x/website@*"
-        # STATIC_SRC="$(echo $GO_MOD_PATH)/tour/static"
-        
-        # # 复制静态资源
-        # cp -r "$STATIC_SRC" dist/static/
 
     - name: Package Artifacts
       run: |
