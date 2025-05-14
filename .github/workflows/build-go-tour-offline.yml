@@ -35,12 +35,12 @@ jobs:
         # 复制二进制文件
         cp "$TOUR_BIN" dist/bin/
         
-        # 查找静态资源路径
-        GO_MOD_PATH="$(go env GOPATH)/pkg/mod/golang.org/x/website@*"
-        STATIC_SRC="$(echo $GO_MOD_PATH)/tour/static"
+        # # 查找静态资源路径
+        # GO_MOD_PATH="$(go env GOPATH)/pkg/mod/golang.org/x/website@*"
+        # STATIC_SRC="$(echo $GO_MOD_PATH)/tour/static"
         
-        # 复制静态资源
-        cp -r "$STATIC_SRC" dist/static/
+        # # 复制静态资源
+        # cp -r "$STATIC_SRC" dist/static/
 
     - name: Package Artifacts
       run: |
@@ -50,72 +50,6 @@ jobs:
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
-      with:
-        name: go-tour-${{ runner.os }}
-        path: |
-          go-tour-${{ runner.os }}.tar.gz
-          go-tour-${{ runner.os }}.zip
-
-name: Build Offline Go Tour
-
-on:
-  workflow_dispatch:
-
-jobs:
-  build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.21'
-
-    - name: Install Tour
-      run: go install golang.org/x/website/tour@latest
-
-    - name: Locate Static Resources
-      id: find_static
-      run: |
-        # 获取模块安装路径
-        MOD_DIR=$(go list -m -f {{.Dir}} golang.org/x/website)
-        echo "MOD_DIR=$MOD_DIR" >> $GITHUB_ENV
-        
-        # 验证静态资源目录
-        if [ ! -d "$MOD_DIR/tour/static" ]; then
-          echo "❌ 找不到静态资源目录：$MOD_DIR/tour/static"
-          exit 1
-        fi
-
-    - name: Package Files
-      shell: bash
-      run: |
-        # 创建打包目录
-        mkdir -p dist/{bin,static}
-        
-        # 复制二进制文件
-        cp "$(go env GOPATH)/bin/tour"* dist/bin/
-        
-        # 复制静态资源（处理不同系统的路径）
-        cp -r "$MOD_DIR/tour/static"/* dist/static/
-        
-        # 验证文件结构
-        echo "✅ 最终文件结构："
-        find dist -print
-
-    - name: Create Archive
-      run: |
-        cd dist
-        tar czvf ../go-tour-${{ runner.os }}.tar.gz *
-        7z a ../go-tour-${{ runner.os }}.zip * > nul 2>&1
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v3
       with:
         name: go-tour-${{ runner.os }}
         path: |
