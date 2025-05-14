@@ -1,0 +1,57 @@
+name: Build Offline Go Tour
+
+on:
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
+
+    - name: Install Tour
+      run: go install golang.org/x/website/tour@latest
+
+    - name: Collect Files
+      run: |
+        # 获取二进制路径
+        TOUR_BIN="$(go env GOPATH)/bin/tour"
+        if [[ "${{ runner.os }}" == "Windows" ]]; then
+          TOUR_BIN="${TOUR_BIN}.exe"
+        fi
+        
+        # 创建打包目录
+        mkdir -p dist/{bin,static}
+        
+        # 复制二进制文件
+        cp "$TOUR_BIN" dist/bin/
+        
+        # 查找静态资源路径
+        GO_MOD_PATH="$(go env GOPATH)/pkg/mod/golang.org/x/website@*"
+        STATIC_SRC="$(echo $GO_MOD_PATH)/tour/static"
+        
+        # 复制静态资源
+        cp -r "$STATIC_SRC" dist/static/
+
+    - name: Package Artifacts
+      run: |
+        cd dist
+        tar czvf ../go-tour-${{ runner.os }}.tar.gz *
+        7z a ../go-tour-${{ runner.os }}.zip *  # Windows系统用zip
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: go-tour-${{ runner.os }}
+        path: |
+          go-tour-${{ runner.os }}.tar.gz
+          go-tour-${{ runner.os }}.zip
