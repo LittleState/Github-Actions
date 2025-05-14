@@ -16,18 +16,20 @@ jobs:
     - name: Install Go Tour
       run: |
         go install golang.org/x/website/tour@latest
-        mkdir dist
-        copy "%GOPATH%\bin\tour.exe" dist\
+        # 获取 tour.exe 的安装路径
+        $tourPath = (Get-Command tour).Source
+        # 创建打包目录
+        New-Item -ItemType Directory -Path dist
+        Copy-Item $tourPath -Destination dist\tour.exe
 
     - name: Create Zip Archive
       run: |
-        cd dist
-        7z a -r go-tour-${{ runner.os }}.zip *
+        Compress-Archive -Path dist/* -DestinationPath go-tour-windows.zip
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
         name: go-tour-${{ runner.os }}
         path: |
-          go-tour-${{ runner.os }}.zip
+          go-tour-windows.zip
       
