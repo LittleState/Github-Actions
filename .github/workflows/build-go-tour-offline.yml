@@ -49,7 +49,7 @@ jobs:
         7z a ../go-tour-${{ runner.os }}.zip *  # Windows系统用zip
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: go-tour-${{ runner.os }}
         path: |
