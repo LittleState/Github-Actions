@@ -1,0 +1,58 @@
+name: Build Offline Package
+
+on:
+  workflow_dispatch:
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'
+
+    - name: 初始化工作目录
+      run: |
+        # 使用临时目录
+        basePath = "$env:RUNNER_TEMP\js-offline"
+        mkdir $basePath
+        echo "BASE_PATH=$basePath" >> $env:GITHUB_ENV
+
+    - name: 克隆仓库
+      run: |
+        basePath = $env:BASE_PATH
+        git clone https://github.com/javascript-tutorial/server "$basePath/server"
+        git clone https://github.com/javascript-tutorial/engine "$basePath/server/modules/engine"
+        git clone https://github.com/javascript-tutorial/zh.javascript.info "$basePath/server/repo/zh.javascript.info"
+
+    - name: 安装全局依赖
+      run: |
+        # 配置 npm 全局目录
+        basePath = $env:BASE_PATH
+        npm config set prefix "$basePath\npm-global" -g
+        echo "$basePath\npm-global" >> $env:GITHUB_PATH
+        # 安装全局依赖
+        npm install --prefix $basePath\npm-global -g bunyan gulp@4
+        ls $basePath
+
+    - name: 安装本地依赖
+      run: |
+        set -x
+        basePath = $env:BASE_PATH
+        cd "$basePath\server"
+        npm install
+        env
+        ./edit zh
+
+    - name: 打包离线文件
+      run: |
+        basePath = $env:BASE_PATH
+        Compress-Archive -Path "$basePath\*" -DestinationPath js-offline.zip
+
+    # - name: 上传产物
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: js-offline-package
+    #     path: js-offline.zip
