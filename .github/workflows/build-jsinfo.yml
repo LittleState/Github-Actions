@@ -47,8 +47,8 @@ jobs:
         $basePath = $env:BASE_PATH
         Compress-Archive -Path "$basePath\*" -DestinationPath js-offline.zip
 
-    - name: 上传产物
-      uses: actions/upload-artifact@v4
-      with:
-        name: js-offline-package
-        path: js-offline.zip
+    # - name: 上传产物
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: js-offline-package
+    #     path: js-offline.zip
