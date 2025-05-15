@@ -34,6 +34,7 @@ jobs:
 
     - name: 安装本地依赖
       run: |
+        Set-PSDebug -Trace 1
         $basePath = $env:BASE_PATH
         cd "$basePath\server"
         npm install
