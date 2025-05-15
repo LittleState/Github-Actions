@@ -1,0 +1,28 @@
+name: Build zh.javascript.info
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Image
+    runs-on: windows-latest
+
+    steps:
+      - run: |
+          New-Item -ItemType Directory -Path dist
+          cd dist
+          npm install -g bunyan gulp@4
+
+          git clone https://github.com/javascript-tutorial/server
+          git clone https://github.com/javascript-tutorial/engine server\modules\engine
+          cd .\server\repo && git clone https://github.com/javascript-tutorial/zh.javascript.info
+
+          cd ..
+          npm install
+
+      # - name: 上传二进制产物
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: neovim-binary
+      #     path: neovim/build/*.deb
