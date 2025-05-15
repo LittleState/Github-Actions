@@ -28,6 +28,7 @@ jobs:
         npm config set prefix "$basePath\npm-global"
         echo "$basePath\npm-global\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
         npm config ls
+        ls C:\npm\prefix
 
     - name: 安装全局依赖
       run: npm install -g bunyan gulp@4
