@@ -11,7 +11,8 @@ jobs:
     - name: 初始化工作目录
       run: |
         # 使用临时目录而非 D 盘根目录
-        $basePath = "$env:RUNNER_TEMP\js-offline"
+        # $basePath = "$env:RUNNER_TEMP\js-offline"
+        $basePath = "D:\js-offline"
         New-Item -Path $basePath -ItemType Directory -Force
         echo "BASE_PATH=$basePath" | Out-File -FilePath $env:GITHUB_ENV -Append
 
