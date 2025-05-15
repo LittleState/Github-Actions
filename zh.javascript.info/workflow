@@ -1,0 +1,45 @@
+name: Build Offline Package
+
+on:
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  package:
+    runs-on: windows-latest  # 使用 Windows 环境
+
+    steps:
+    - name: 创建目录结构
+      run: |
+        mkdir D:\js
+        mkdir D:\js\server
+        mkdir D:\js\server\modules
+        mkdir D:\js\server\repo
+
+    - name: 克隆仓库
+      run: |
+        git clone https://github.com/javascript-tutorial/server D:\js\server
+        git clone https://github.com/javascript-tutorial/engine D:\js\server\modules\engine
+        git clone https://github.com/javascript-tutorial/en.javascript.info D:\js\server\repo\en.javascript.info
+
+    - name: 配置 npm 全局目录
+      run: |
+        npm config set prefix "D:\js\npm-global"
+        echo "D:\js\npm-global\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
+
+    - name: 安装全局依赖
+      run: npm install -g bunyan gulp@4
+
+    - name: 安装本地依赖
+      run: |
+        cd D:\js\server
+        npm install
+
+    - name: 打包离线文件
+      run: |
+        Compress-Archive -Path D:\js -DestinationPath js-offline.zip
+
+    - name: 上传产物
+      uses: actions/upload-artifact@v2
+      with:
+        name: js-offline-package
+        path: js-offline.zip
