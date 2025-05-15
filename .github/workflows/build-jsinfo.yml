@@ -29,6 +29,7 @@ jobs:
         echo "$basePath\npm-global\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
         npm config ls -g
         ls C:\npm\prefix
+        env
 
     - name: 安装全局依赖
       run: |
