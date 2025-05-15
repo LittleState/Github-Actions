@@ -25,13 +25,16 @@ jobs:
     - name: 配置 npm 全局目录
       run: |
         $basePath = $env:BASE_PATH
+        npm config delete prefix
         npm config set prefix "$basePath\npm-global"
         echo "$basePath\npm-global\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
         npm config ls
         ls C:\npm\prefix
 
     - name: 安装全局依赖
-      run: npm install --prefix $basePath\npm-global -g bunyan gulp@4
+      run: |
+        npm install --prefix $basePath\npm-global -g bunyan gulp@4
+        ls $basePath
 
     - name: 安装本地依赖
       run: |
@@ -43,8 +46,6 @@ jobs:
       run: |
         $basePath = $env:BASE_PATH
         Compress-Archive -Path "$basePath\*" -DestinationPath js-offline.zip
-        cd $basePath
-        dir
 
     # - name: 上传产物
     #   uses: actions/upload-artifact@v4
