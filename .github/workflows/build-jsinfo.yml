@@ -19,7 +19,7 @@ jobs:
       run: |
         git clone https://github.com/javascript-tutorial/server D:\js\server
         git clone https://github.com/javascript-tutorial/engine D:\js\server\modules\engine
-        git clone https://github.com/javascript-tutorial/en.javascript.info D:\js\server\repo\en.javascript.info
+        git clone https://github.com/javascript-tutorial/en.javascript.info D:\js\server\repo\zh.javascript.info
 
     - name: 配置 npm 全局目录
       run: |
