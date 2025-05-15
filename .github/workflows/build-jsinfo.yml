@@ -38,6 +38,7 @@ jobs:
         $basePath = $env:BASE_PATH
         cd "$basePath\server"
         npm install
+        env
         ./edit zh
 
     - name: 打包离线文件
