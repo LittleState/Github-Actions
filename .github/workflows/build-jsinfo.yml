@@ -27,7 +27,7 @@ jobs:
         # 配置 npm 全局目录
         $basePath = $env:BASE_PATH
         npm config set prefix "$basePath\npm-global" -g
-        echo "$basePath\npm-global\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
+        echo "$basePath\npm-global" | Out-File -FilePath $env:GITHUB_PATH -Append
         # 安装全局依赖
         npm install --prefix $basePath\npm-global -g bunyan gulp@4
         ls $basePath
