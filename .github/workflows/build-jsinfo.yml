@@ -31,7 +31,7 @@ jobs:
         ls C:\npm\prefix
 
     - name: 安装全局依赖
-      run: npm install -g bunyan gulp@4
+      run: npm install --prefix $basePath\npm-global -g bunyan gulp@4
 
     - name: 安装本地依赖
       run: |
