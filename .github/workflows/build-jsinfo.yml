@@ -22,20 +22,13 @@ jobs:
         git clone https://github.com/javascript-tutorial/engine "$basePath\server\modules\engine"
         git clone https://github.com/javascript-tutorial/zh.javascript.info "$basePath\server\repo\zh.javascript.info"
 
-    - name: 配置 npm 全局目录
-      run: |
-        $basePath = $env:BASE_PATH
-        npm config set prefix "$basePath\npm-global" -g
-        echo "$basePath\npm-global\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
-        npm config ls -g
-        ls C:\npm\prefix
-        env
-
     - name: 安装全局依赖
       run: |
+        # 配置 npm 全局目录
         $basePath = $env:BASE_PATH
         npm config set prefix "$basePath\npm-global" -g
         echo "$basePath\npm-global\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
+        # 安装全局依赖
         npm install --prefix $basePath\npm-global -g bunyan gulp@4
         ls $basePath
 
@@ -50,8 +43,8 @@ jobs:
         $basePath = $env:BASE_PATH
         Compress-Archive -Path "$basePath\*" -DestinationPath js-offline.zip
 
-    # - name: 上传产物
-    #   uses: actions/upload-artifact@v4
-    #   with:
-    #     name: js-offline-package
-    #     path: js-offline.zip
+    - name: 上传产物
+      uses: actions/upload-artifact@v4
+      with:
+        name: js-offline-package
+        path: js-offline.zip
