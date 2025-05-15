@@ -11,3 +11,5 @@ RUN git clone https://github.com/javascript-tutorial/server && \
 
 WORKDIR /js/server
 RUN npm install
+
+CMD ["edit", "zh"]
