@@ -25,7 +25,7 @@ jobs:
     - name: 配置 npm 全局目录
       run: |
         $basePath = $env:BASE_PATH
-        npm config set prefix "$basePath\npm-global" --global
+        npm config set prefix "$basePath\npm-global"
         echo "$basePath\npm-global\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
         npm config ls
 
