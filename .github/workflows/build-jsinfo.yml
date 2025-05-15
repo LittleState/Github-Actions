@@ -21,6 +21,7 @@ jobs:
         git clone https://github.com/javascript-tutorial/server "$basePath\server"
         git clone https://github.com/javascript-tutorial/engine "$basePath\server\modules\engine"
         git clone https://github.com/javascript-tutorial/en.javascript.info "$basePath\server\repo\en.javascript.info"
+
     - name: 配置 npm 全局目录
       run: |
         $basePath = $env:BASE_PATH
