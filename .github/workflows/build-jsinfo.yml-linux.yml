@@ -3,6 +3,9 @@ name: Build Offline Package
 on:
   workflow_dispatch:
 
+env:
+  ACTIONS_STEP_DEBUG: true
+
 jobs:
   package:
     runs-on: ubuntu-latest
