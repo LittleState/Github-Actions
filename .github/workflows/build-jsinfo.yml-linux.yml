@@ -19,7 +19,7 @@ jobs:
     - name: 初始化工作目录
       run: |
         # 使用临时目录
-        basePath = "$RUNNER_TEMP\js-offline"
+        basePath="$RUNNER_TEMP\js-offline"
         mkdir $basePath
         echo "BASE_PATH=$basePath" >> $GITHUB_ENV
 
