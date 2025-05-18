@@ -1,15 +1,16 @@
-FROM node:18-alpine
+FROM node:22-alpine
 
-RUN apk add --no-cache git imagemagick
+ENV LANG=zh
+ENV HOST=0.0.0.0
 
-WORKDIR /js
-RUN npm install -g bunyan gulp@4
-
-RUN git clone https://github.com/javascript-tutorial/server && \
-    git clone https://github.com/javascript-tutorial/engine server/modules/engine && \
-    cd /js/server/repo && git clone https://github.com/javascript-tutorial/zh.javascript.info
+RUN npm install -g bunyan gulp@4 \
+    && apk add --no-cache git \
+    && mkdir /js && cd /js \
+    && git clone https://github.com/javascript-tutorial/server \
+    && git clone https://github.com/javascript-tutorial/engine server/modules/engine \
+    && git clone https://github.com/javascript-tutorial/$LANG.javascript.info server/repo/$LANG.javascript.info \
+    && cd server && npm install
 
 WORKDIR /js/server
-RUN npm install
-
-CMD ["edit", "zh"]
+EXPOSE 3000
+CMD ["./edit", "$LANG"]
