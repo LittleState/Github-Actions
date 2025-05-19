@@ -15,12 +15,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - working-directory: ./zh.javascript.info
         run: |
-          docker build -t x1aobang/jsinfo:latest .
+          docker build -t jsinfo:latest .
+          docker save jsinfo:latest | gzip > jsinfo_latest.tar.gz
 
-      # - name: 上传二进制产物
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: neovim-binary
-      #     path: neovim/build/*.deb
+      - name: 上传二进制产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: jsinfo-docker
+          path: ./zh.javascript.info/jsinfo_latest.tar.gz
