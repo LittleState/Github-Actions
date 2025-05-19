@@ -12,4 +12,4 @@ RUN npm install -g bunyan gulp@4 \
 
 WORKDIR /js/server
 EXPOSE 3000
-CMD ["edit", "$LANG"]
+CMD ["./edit", "$LANG"]
