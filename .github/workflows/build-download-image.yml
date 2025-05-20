@@ -1,0 +1,26 @@
+name: Download Image
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_name:
+        description: input image name
+        required: true
+        type: text
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Pull Image
+        run: docker pull ${{ inputs.image_name }}
+
+      - name: Save Image
+        run: docker save ${{ inputs.image_name }} | gzip > ${{ inputs.image_name }}.tar.gz
+
+      - name: Upload Image
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          path: ${{ inputs.image_name }}.tar.gz
+          
