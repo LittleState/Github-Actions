@@ -13,14 +13,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - run: |
+          echo "imagename=echo ${{ inputs.image_name }} | cut -d'/' -f2 | cut -d':' -f1" > $GITHUB_ENV
+
       - name: Pull Image
         run: docker pull ${{ inputs.image_name }}
 
       - name: Save Image
-        run: docker save ${{ inputs.image_name }} | gzip > ${{ inputs.image_name }}.tar.gz
+        run: docker save ${{ inputs.image_name }} | gzip > imagename.tar.gz
 
       - name: Upload Image
         uses: actions/upload-artifact@v4.6.2
         with:
-          path: ${{ inputs.image_name }}.tar.gz
+          path: imagename.tar.gz
           
