@@ -1,4 +1,4 @@
-FROM node:10
+FROM node:18
 
 ARG LANG=zh
 ENV LANG=${LANG}
