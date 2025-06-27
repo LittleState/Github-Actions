@@ -1,0 +1,26 @@
+name: Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - working-directory: ./py-unpacker
+        run: |
+          docker build -t py-unpacker:latest .
+          docker save py-unpacker:latest | gzip > py-unpacker.tar.gz
+
+      # - run: |
+      #     docker run --rm --name py-unpacker py-unpacker
+
+      - name: 上传二进制产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: py-unpacker
+          path: ./py-unpacker/py-unpacker.tar.gz
