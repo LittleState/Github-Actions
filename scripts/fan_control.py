@@ -1,43 +1,68 @@
 import RPi.GPIO as GPIO
+import subprocess
 import time
-import os
 
-# 设置GPIO模式
+FAN_PIN = 14
+PWM_FREQ = 25
+INTERVAL = 5
+
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(14, GPIO.OUT)  # 假设风扇连接到GPIO14
+GPIO.setup(FAN_PIN, GPIO.OUT)
+fan = GPIO.PWM(FAN_PIN, PWM_FREQ)
+fan.start(0)
 
-# 设置PWM
-fan = GPIO.PWM(14, 25)  # GPIO18, 频率为25Hz
-fan.start(0)  # 初始占空比（风扇停止）
+current_duty = 0
 
-def get_cpu_temperature():
-    """获取CPU温度"""
-    res = os.popen('vcgencmd measure_temp').readline()
-    temp_str = res.replace("temp=", "").replace("'C\n", "")
-    return float(temp_str)
+
+def get_temp():
+    try:
+        r = subprocess.run(
+            ['vcgencmd', 'measure_temp'],
+            capture_output=True, text=True, timeout=3,
+        )
+        return float(r.stdout.replace('temp=', '').replace("'C\n", ''))
+    except Exception:
+        return None
+
+
+def target_duty(temp, current):
+    """根据当前状态和温度计算目标占空比，带迟滞避免频繁切换"""
+    if current == 0:
+        if temp >= 46:
+            return 40
+    elif current == 40:
+        if temp < 43:
+            return 0
+        elif temp >= 51:
+            return 75
+    elif current == 75:
+        if temp < 48:
+            return 40
+        elif temp >= 56:
+            return 100
+    elif current == 100:
+        if temp < 53:
+            return 75
+    return current
+
 
 try:
     while True:
-        temp = get_cpu_temperature()
-        print(f"Current Temperature: {temp} 'C")
+        temp = get_temp()
+        if temp is None:
+            time.sleep(INTERVAL)
+            continue
 
-        # 根据温度调整风扇占空比
-        if temp < 55:
-            duty_cycle = 10  # 停止转动
-        elif 55 <= temp < 65:
-            duty_cycle = 20  # 中速
-        elif 65 <= temp < 75:
-            duty_cycle = 50  # 高速
-        else:
-            duty_cycle = 100  # 全速
+        duty = target_duty(temp, current_duty)
+        if duty != current_duty:
+            current_duty = duty
+            fan.ChangeDutyCycle(duty)
+            print(f"{temp}°C -> fan {duty}%")
 
-        fan.ChangeDutyCycle(duty_cycle)
-        print(f"Fan duty cycle set to: {duty_cycle}%")
-        time.sleep(5)
+        time.sleep(INTERVAL)
 
 except KeyboardInterrupt:
     pass
-
 finally:
     fan.stop()
     GPIO.cleanup()
